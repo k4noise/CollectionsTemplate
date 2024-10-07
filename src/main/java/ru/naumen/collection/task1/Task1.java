@@ -1,5 +1,7 @@
 package ru.naumen.collection.task1;
 
+import java.util.HashMap;
+
 /**
  * Дано:
  * <pre>
@@ -24,6 +26,12 @@ package ru.naumen.collection.task1;
  */
 public class Task1
 {
+    /**
+     *  Хранилище товаров, купленных к билету
+     *  Выбран HashMap для поиска и вставки за O(1)
+     */
+    private final HashMap<Ticket, Goods> goodsStorage = new HashMap<>();
+
     public enum Goods {
         /**
          * нет товаров
@@ -40,6 +48,14 @@ public class Task1
     }
 
     /**
+     * Сохранить товары по билету
+     * <p>Сложность алгоритма O(1), так как явно объявили хэш-функцию, не вызывающую коллизий</p>
+     */
+    public void saveGoods(Ticket ticket, Goods good) {
+        goodsStorage.put(ticket, good);
+    }
+
+    /**
      * Получить товары по билету
      * <p>Сложность алгоритма O(1)</p>
      *
@@ -47,7 +63,6 @@ public class Task1
      * <p>Достаточно их определить только для id, т.к. он уникален</p>
      */
     public Goods getGoods(Ticket ticket) {
-        // TODO реализовать
-        return null;
+        return goodsStorage.get(ticket);
     }
 }

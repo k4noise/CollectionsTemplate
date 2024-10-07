@@ -1,7 +1,6 @@
 package ru.naumen.collection.task2;
 
-import java.util.Collection;
-import java.util.List;
+import java.util.*;
 
 /**
  * Дано:
@@ -31,12 +30,30 @@ import java.util.List;
  */
 public class Task2
 {
-
     /**
      * Возвращает дубликаты пользователей, которые есть в обеих коллекциях
+     * O(2n+size(collB))
      */
     public static List<User> findDuplicates(Collection<User> collA, Collection<User> collB) {
-        // TODO реализовать метод
-        return null;
+        /**
+         * По заданию разрешено игнорировать дубликаты в коллекциях
+         * Выбран HashSet для операций вставки и поиска за O(1),
+         * так как явно объявили хэш-функцию, не вызывающую коллизий
+         * Инициализация - O(n)
+         */
+        HashSet<User> collAUsers = new HashSet<>(collA);
+        int maxDuplicatesSize = Math.min(collA.size(), collB.size());
+        /**
+         * Выбран ArrayList для операций вставки в конец за O(1),
+         * так как память выделена заранее
+         */
+        ArrayList<User> usersDuplicate = new ArrayList<>(maxDuplicatesSize);
+        /** Перебор коллекции - O(n) */
+        for (User collBUsers : collB) {
+            if (collAUsers.contains(collBUsers)) {
+                usersDuplicate.add(collBUsers);
+            }
+        }
+        return usersDuplicate;
     }
 }
